@@ -36,6 +36,20 @@ namespace UserManagement.Controllers
             return Ok(user);
         }
 
+        [HttpPost("/findbyemail")]
+        public async Task<ActionResult<User>> GetUser([FromBody] UserRequest request)
+        {
+            var email=request.Email.ToLower();  
+            var user =  _context.Users.Where(x=>x.Email.ToLower()==email).FirstOrDefault();    
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
         // POST: api/user
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(User user)
@@ -98,5 +112,8 @@ namespace UserManagement.Controllers
 
             return NoContent();
         }
+
+
+
     }
 }

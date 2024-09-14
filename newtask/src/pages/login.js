@@ -5,7 +5,7 @@ export default function Login() {
     const [email, setEmail] = useState('');
   const navigate = useNavigate();
 
-  // Handle login
+
 function handleLogin () {
    
     navigate('/home');

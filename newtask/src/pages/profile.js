@@ -1,25 +1,34 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState ,useContext} from 'react';
+import { UserContext } from '../context/usercontext';
 
 export default function Profile() {
-    const location = useLocation();  
-    const { name, email } = location.state;
+  const { userData, setUserData } = useContext(UserContext);
+    const navigate =useNavigate()
+  
 
-    const [username, setUsername] = useState(name);
-    const [userEmail, setUserEmail] = useState(email);
+    const [username, setUsername] = useState(userData.name);
+    const [userEmail, setUserEmail] = useState(userData.email);
 
     const handleSubmit = () => {
-  
-        console.log('Updated Username:', username);
-        console.log('Updated Email:', userEmail);
-      };
+      setUserData((prevData) => ({
+        ...prevData,
+        name: username,
+        email: userEmail,
+      }));
+    };
+
+      function backToHome(){
+        navigate('/home');
+      }
   return (
     <div style={{padding:"5%"}}>
+        <button onClick={backToHome}> back to Home</button>
     
     <div style={{display:"flex",justifyContent:"space-between"}}>
-    <h2> {name}</h2>
-    <h2> {email}</h2>
+    <h2>{userData.name}</h2>
+    <h2>{userData.email}</h2>
     </div>
 
     <div>
